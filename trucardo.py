@@ -57,14 +57,18 @@ def determinar_ganador(carta1, carta2):
 
 # Función principal del juego
 def jugar_truco():
-    mano_jugador1 = repartir_cartas()
-    mano_jugador2 = repartir_cartas()
-    
-    # print(f"Jugador 1 tiene: {mano_jugador1}")
-    # print(f"Jugador 2 tiene: {mano_jugador2}")
-    
+    cartas = repartir_cartas()
+    mano_jugador1 = cartas[0]
+    mano_jugador2 = cartas[1]
+    cartaJugada = ''
+    # print(mano_jugador1, mano_jugador2)
+    print(f"Jugador 1 tiene: {mano_jugador1}")
+    while(cartaJugada != 0 and cartaJugada != 1 and cartaJugada != 2):
+        cartaJugada = int(input('ingrese cual es la posicion de la carta que quiere jugar (1, 2 o 3): ')) - 1
+        if(cartaJugada != 0 and cartaJugada != 1 and cartaJugada != 2):
+            print('posicion no valida')
     # Jugar una ronda simple (primera carta de cada jugador)
-    # ganador = determinar_ganador(mano_jugador1[0], mano_jugador2[0])
+    ganador = determinar_ganador(mano_jugador1[0], mano_jugador2[0])
     # print(f"Jugador 1 juega: {mano_jugador1[0]}")
     # print(f"Jugador 2 juega: {mano_jugador2[0]}")
     # print(f"El ganador de la ronda es: {ganador}")
