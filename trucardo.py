@@ -4,8 +4,25 @@ import random
 palos = ['Espadas', 'Bastos', 'Oros', 'Copas']
 valores = ['1', '2', '3', '4', '5', '6', '7', '10', '11', '12']
 
-# Definimos la jerarquía de las cartas en el Truco
-jerarquia = {
+# Definimos la jerarquía de las cartas en el Truco. Debido a la limitación de objetos, nos basamos en los índices de cada arreglo para elaborar la jerarquía.
+JERARQUIA = [
+    ['1 de Espadas'],
+    ['1 de Bastos'],
+    ['7 de Espadas'],
+    ['7 de Oros'],
+    ['3 de Espadas', '3 de Oros', '3 de Copas', '3 de Bastos']
+    ['2 de Espadas', '2 de Oros', '2 de Copas', '2 de Bastos']
+    ['1 de Copas', '1 de Oros']
+    ['12 de Espadas', '12 de Oros', '12 de Copas', '12 de Bastos']
+    ['11 de Espadas', '11 de Oros', '11 de Copas', '11 de Bastos']
+    ['10 de Espadas', '10 de Oros', '10 de Copas', '10 de Bastos']
+    ['7 de Copas', '7 de Bastos']
+    ['6 de Espadas', '6 de Oros', '6 de Copas', '6 de Bastos']
+    ['5 de Espadas', '5 de Oros', '5 de Copas', '5 de Bastos']
+    ['4 de Espadas', '4 de Oros', '4 de Copas', '4 de Bastos']
+]
+
+""" JERARQUIA = {
     '1 Espadas': 14,
     '1 Bastos': 13,
     '7 Espadas': 12,
@@ -20,7 +37,7 @@ jerarquia = {
     '6': 3,
     '5': 2,
     '4': 1
-}
+} """
 
 # Creamos el mazo de cartas
 mazo = []
@@ -46,8 +63,8 @@ def repartir_cartas():
 
 # Función para determinar el ganador de una ronda
 def determinar_ganador(carta1, carta2):
-    valor_carta1 = jerarquia.get(carta1.split()[0], 0)
-    valor_carta2 = jerarquia.get(carta2.split()[0], 0)
+    valor_carta1 = JERARQUIA.get(carta1.split()[0], 0)
+    valor_carta2 = JERARQUIA.get(carta2.split()[0], 0)
     if valor_carta1 > valor_carta2:
         return "Jugador 1"
     elif valor_carta2 > valor_carta1:
