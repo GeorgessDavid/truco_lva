@@ -2,8 +2,9 @@ import random
 #trucardo
 # Definimos los palos y los valores de las cartas
 turno = 1
-rondasGanadasjugador1 = 0
-rondasGanadasjugador2 = 0
+puntosjugador1 = 0
+puntosjugador2 = 0
+ganadorUltimaRonda = 'Jugador 1' #Default Jugador 1
 palos = ['Espadas', 'Bastos', 'Oros', 'Copas']
 valores = ['1', '2', '3', '4', '5', '6', '7', '10', '11', '12']
 
@@ -45,6 +46,12 @@ def repartir_cartas():
     mano_jugador2.append(mazo[3])
     mano_jugador2.append(mazo[4])
     mano_jugador2.append(mazo[5])
+    mazo.remove(mazo[0])
+    mazo.remove(mazo[1])
+    mazo.remove(mazo[2])
+    mazo.remove(mazo[3])
+    mazo.remove(mazo[4])
+    mazo.remove(mazo[5])
     return [mano_jugador1, mano_jugador2]
 
 
@@ -61,7 +68,7 @@ def determinar_ganador(carta1, carta2):
     # Encontrar índice de carta2
     for i in range(len(JERARQUIA)):
         for j in range(len(JERARQUIA[i])):
-            if carta1 == JERARQUIA[i][j]:
+            if carta2 == JERARQUIA[i][j]:
                 valor_carta2 = i
     
     # Devolver el mayor índice
@@ -72,22 +79,65 @@ def determinar_ganador(carta1, carta2):
     else:
         return "Empate"
 
+def calcular_puntos(juego, seQuiere):
+    puntos = 0
+    if (juego == 'truco'):
+        if(seQuiere == True):
+            puntos = 2
+        else:
+            puntos = 1
+    elif(juego == 'retruco'):
+        if(seQuiere == True):
+            puntos = 3
+        else:
+            puntos = 2
+    elif(juego == 'vale cuatro'):
+        if(seQuiere == True):
+            puntos = 4
+        else:
+            puntos = 3
+    elif(juego == 'envido'):
+        if(seQuiere == True):
+            puntos = 2
+        else:
+            puntos = 1
+    elif(juego == 'real envido'):
+        if(seQuiere == True):
+            puntos = 4
+        else:
+            puntos = 1
+    elif(juego == 'falta envido'):
+        if(seQuiere == True):
+            puntos = 999
+        else:
+            puntos = 1
+    
+    return puntos
+
 # Función principal del juego
 def jugar_truco():
     cartas = repartir_cartas()
     mano_jugador1 = cartas[0]
     mano_jugador2 = cartas[1]
-    cartaJugada = ''
-    # print(mano_jugador1, mano_jugador2)
-    print(f"Jugador 1 tiene: {mano_jugador1}")
+    cartaJugada = 0
+    print("mano ",turno)
+    print("Jugador 1 tiene: ",mano_jugador1)
+    #Pregunta si quiere cantar truco o envido, en el principio de cada manos
+    while(juego != 'truco' and juego != 'envido' and juego != 'no'):
+        juego = input('Cantas truco o envido? (escribí "truco", "envido" o "no")')
+        if(juego != 'truco' and juego != 'envido' and juego != 'no'):
+            print('Lo que ingresaste no es valido, intenta de nuevo')
+    # Pide al jugador que ingrese el numero de la posicion de la carta
     while(cartaJugada != 0 and cartaJugada != 1 and cartaJugada != 2):
-        cartaJugada = int(input('ingrese cual es la posicion de la carta que quiere jugar (1, 2 o 3): ')) - 1
+        cartaJugada = int(input('ingresa cual es la posicion de la carta que queres jugar (1, 2 o 3): ')) - 1
         if(cartaJugada != 0 and cartaJugada != 1 and cartaJugada != 2):
             print('posicion no valida')
     # Jugar una ronda simple (primera carta de cada jugador)
     ganador = determinar_ganador(mano_jugador1[cartaJugada], mano_jugador2[0])
-    print(f"Jugador 1 juega: {mano_jugador1[cartaJugada]}")
-    print(f"Jugador 2 juega: {mano_jugador2[0]}")
+    print("Jugador 1 juega: ",mano_jugador1[cartaJugada])
+    print("Jugador 2 juega: ",mano_jugador2[0])
+    
+    #Se sacan de la mano las cartas jugadas
     mano_jugador1.remove(mano_jugador1[cartaJugada])
     mano_jugador2.remove(mano_jugador2[0])
     # print(f"El ganador de la ronda es: {ganador}")
