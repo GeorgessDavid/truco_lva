@@ -1,12 +1,11 @@
 import random
 #trucardo
 # Definimos los palos y los valores de las cartas
-turno = 1
 puntosjugador1 = 0
 puntosjugador2 = 0
-ganadorUltimaRonda = 'Jugador 1' #Default Jugador 1
 palos = ['Espadas', 'Bastos', 'Oros', 'Copas']
 valores = ['1', '2', '3', '4', '5', '6', '7', '10', '11', '12']
+puntosJuego = 0
 
 # Definimos la jerarquía de las cartas en el Truco. Debido a la limitación de objetos, nos basamos en los índices de cada arreglo para elaborar la jerarquía.
 JERARQUIA = [
@@ -81,9 +80,11 @@ def determinar_ganador(carta1, carta2):
     
     # Devolver el mayor índice
     if valor_carta1 < valor_carta2:
-        return "Jugador 1"
+        ganadorUltimaRonda = 'Jugador 1'
+        return ganadorUltimaRonda
     elif valor_carta2 < valor_carta1:
-        return "Jugador 2"
+        ganadorUltimaRonda = 'Jugador 2'
+        return ganadorUltimaRonda
     else:
         return "Empate"
 
@@ -217,7 +218,8 @@ def calcular_puntos(juego, seQuiere):
             puntos = 999
         else:
             puntos = 1
-    
+    else:
+        puntos = 1
     return puntos
 
 # Función principal del juego
@@ -225,28 +227,87 @@ def jugar_truco():
     cartas = repartir_cartas()
     mano_jugador1 = cartas[0]
     mano_jugador2 = cartas[1]
-    cartaJugada = 0
-    print("mano ",turno)
-    print("Jugador 1 tiene: ",mano_jugador1)
-    #Pregunta si quiere cantar truco o envido, en el principio de cada manos
-    while(juego != 'truco' and juego != 'envido' and juego != 'no'):
-        juego = input('Cantas truco o envido? (escribí "truco", "envido" o "no")')
-        if(juego != 'truco' and juego != 'envido' and juego != 'no'):
-            print('Lo que ingresaste no es valido, intenta de nuevo')
-    # Pide al jugador que ingrese el numero de la posicion de la carta
-    while(cartaJugada != 0 and cartaJugada != 1 and cartaJugada != 2):
-        cartaJugada = int(input('ingresa cual es la posicion de la carta que queres jugar (1, 2 o 3): ')) - 1
-        if(cartaJugada != 0 and cartaJugada != 1 and cartaJugada != 2):
-            print('posicion no valida')
-    # Jugar una ronda simple (primera carta de cada jugador)
-    ganador = determinar_ganador(mano_jugador1[cartaJugada], mano_jugador2[0])
-    print("Jugador 1 juega: ",mano_jugador1[cartaJugada])
-    print("Jugador 2 juega: ",mano_jugador2[0])
+    juego = ''
+    turno = 1
+    ganadorUltimaRonda = 'Jugador 1' #Default Jugador 1
+    rondasGanadasJugador1 = 0
+    rondasGanadasJugador2 = 0
     
-    #Se sacan de la mano las cartas jugadas
-    mano_jugador1.remove(mano_jugador1[cartaJugada])
-    mano_jugador2.remove(mano_jugador2[0])
-    # print(f"El ganador de la ronda es: {ganador}")
+    while(turno < 4 or rondasGanadasJugador1 == 2 or rondasGanadasJugador2 == 2):
+        cartaJugada = int(99) #Le pongo 99 porque para cumplir la condicion tiene que ser 0, 1 o 2
+        print("Mano",turno)
+        print("Jugador 1 tiene:",mano_jugador1)
+        print("Comienza jugando:", ganadorUltimaRonda)
+        if(ganadorUltimaRonda == 'Jugador 2'):
+            print("Jugador 2 juega:",mano_jugador2[0])
+        print(juego, juego == 'no')
+        #Pregunta si quiere cantar truco o envido, en el principio de cada manos
+        if(juego == '' or juego == 'no'):
+            juego = ''
+            while(juego != 'truco' and juego != 'envido' and juego != 'no'):
+                juego = input('Cantas truco o envido? (escribí "truco", "envido" o "no"): ')
+                if(juego != 'truco' and juego != 'envido' and juego != 'no'):
+                    print('Lo que ingresaste no es valido, intenta de nuevo')
+        elif(juego == 'truco'):
+            confirmacion = ''
+            while(confirmacion != 'si' and confirmacion != 'no'):
+                confirmacion = input('Queres cantar retruco? (por "si" o por "no"): ')
+                juego = 'retruco'
+                if(confirmacion != 'si' and confirmacion != 'no'):
+                    print('Lo que ingresaste no es valido, intenta de nuevo')
+                elif(confirmacion == 'no'):
+                    puntos = calcular_puntos(juego, False)
+                    return False
+        elif(juego == 'retruco'):
+            confirmacion = ''
+            while(confirmacion != 'si' and confirmacion != 'no'):
+                confirmacion = input('Queres cantar vale cuatro? (por "si" o por "no"): ')
+                juego = 'vale cuatro'
+                if(confirmacion != 'si' and confirmacion != 'no'):
+                    print('Lo que ingresaste no es valido, intenta de nuevo')
+                elif(confirmacion == 'no'):
+                    puntos = calcular_puntos(juego, False)
+                    return False
+        
+        # Pide al jugador que ingrese el numero de la posicion de la carta
+        while(cartaJugada == '' or cartaJugada > len(mano_jugador1)-1 or cartaJugada <= -1):
+            cartaJugada = int(input('ingresa cual es la posicion de la carta que queres jugar (tenes '+str(len(mano_jugador1))+' cartas): ')) - 1
+            if(cartaJugada > len(mano_jugador1)-1 or cartaJugada <= -1):
+                print('posicion no valida')
+        
+        # Jugar una ronda simple (primera carta de cada jugador)
+        ganador = determinar_ganador(mano_jugador1[cartaJugada], mano_jugador2[0])
+        print("Jugador 1 juega:",mano_jugador1[cartaJugada])
+        if(ganadorUltimaRonda == 'Jugador 1'):
+            print("Jugador 2 juega:",mano_jugador2[0])
+        
+        #Se sacan de la mano las cartas jugadas
+        mano_jugador1.remove(mano_jugador1[cartaJugada])
+        mano_jugador2.remove(mano_jugador2[0])
+        print("El ganador de la ronda es:",ganador)
+        if(ganador == 'Jugador 1'):
+            rondasGanadasJugador1 = rondasGanadasJugador1 + 1
+        elif(ganador == 'Jugador 2'):
+            rondasGanadasJugador2 = rondasGanadasJugador2 + 1
+        print(rondasGanadasJugador1, rondasGanadasJugador2)
+        turno = turno + 1
+        ganadorUltimaRonda = ganador
 
 # Ejecutar el juego
-jugar_truco()
+while(puntosJuego != 30 and puntosJuego != 15 and puntosJuego != 50):
+    puntosJuego = int(input('Indica a cuantos puntos va a ser el truco ("15", "30" o "50"): '))
+    if(puntosJuego != 30 and puntosJuego != 15 and puntosJuego != 50):
+        print('No es valido lo que ingresaste, intenta de nuevo')
+while(puntosjugador1 < puntosJuego or puntosjugador2 < puntosJuego):
+    jugar_truco()
+
+#si los dos pasan el puntaje a alcanzar, gana el que tenga mas puntos
+if(puntosjugador1 < puntosJuego and puntosjugador2 < puntosJuego):
+    if(puntosjugador1 < puntosjugador2):
+        print('Ganador: Jugador 2')
+    else:
+        print('Ganador: Jugador 1')
+elif(puntosjugador1 > puntosJuego):
+        print('Ganador: Jugador 1')
+else:
+        print('Ganador: Jugador 2')
