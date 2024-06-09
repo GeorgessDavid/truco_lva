@@ -270,35 +270,6 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
         print("Jugador 1 tiene:",mano_jugador1)
         print("Comienza jugando:", ganadorUltimaRonda)
         if(ganadorUltimaRonda == 'Jugador 2'):
-<<<<<<< HEAD
-            print("Jugador 2 juega:",mano_jugador2[0])
-        print(juego)
-        #Pregunta si quiere cantar truco o envido, en el principio de cada manos
-        if(juego == '' or juego == 'no'):
-            juego = ''
-            while(juego != 'truco' and juego != 'no'):
-                if turno == 1 and juego != 'envido':
-                    juego = input('Cantas truco o envido? (escribí "truco", "envido" o "no"): ')
-                else:
-                    juego = input('Cantas truco ? (escribí "truco" o "no"): ')    
-                if(juego != 'truco' and juego != 'envido' and juego != 'no'):
-                    print('Lo que ingresaste no es valido, intenta de nuevo')
-                if(juego == 'envido'):
-                    print('Se quiso el envido.')
-                    tantoJugador1 = calcular_tanto(mano_jugador1)
-                    tantoJugador2 = calcular_tanto(mano_jugador2)
-                    
-                    if tantoJugador1 > tantoJugador2:
-                        puntos = calcular_puntos(juego, True)
-                        print('Ganaste el envido: tenías '+str(tantoJugador1)+' y el Jugador 2 tenía '+str(tantoJugador2))
-                    elif tantoJugador2 > tantoJugador1:
-                        print('Perdiste el envido: el Jugador 2 tenía '+str(tantoJugador2)+' y tenías '+str(tantoJugador1))
-                    else:
-                        print('No hay puntos para nadie, es demasiada lógica calcular quién gana por mano.')
-
-                    juego = 'envido'
-        elif(juego == 'truco'):
-=======
             if(cantoMaquina == False):
                 cantaMaq = maquinaDecideSiCantar(turno, juego, False)
                 if(cantaMaq != 'no'):
@@ -385,27 +356,12 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                             cantoJugador = True
                             cantoMaquina = False
         else:
->>>>>>> bb022e472895cf337ef6870239b9207401ed9260
             confirmacion = ''
             while(confirmacion != 'si' and confirmacion != 'no'):
                 confirmacion = input('Aceptas lo que cantó Jugador 2? (por "si" o por "no"): ')
                 if(confirmacion != 'si' and confirmacion != 'no'):
                     print('Lo que ingresaste no es valido, intenta de nuevo')
                 elif(confirmacion == 'no'):
-<<<<<<< HEAD
-                    puntos = calcular_puntos(juego, False)
-                    return False
-        elif(juego == 'retruco'):
-            confirmacion = ''
-            while(confirmacion != 'si' and confirmacion != 'no'):
-                confirmacion = input('Queres cantar vale cuatro? (por "si" o por "no"): ')
-                juego = 'vale cuatro'
-                if(confirmacion != 'si' and confirmacion != 'no'):
-                    print('Lo que ingresaste no es valido, intenta de nuevo')
-                elif(confirmacion == 'no'):
-                    puntos = calcular_puntos(juego, False)
-                    return False            
-=======
                     resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 2')
                     puntosjugador1 = resultado[0]
                     puntosjugador2 = resultado[1]
@@ -414,7 +370,6 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                     print('se juega', juego)
                     print("Jugador 2 juega:",mano_jugador2[0])
                     cantoMaquina = False
->>>>>>> bb022e472895cf337ef6870239b9207401ed9260
         # Pide al jugador que ingrese el numero de la posicion de la carta
         while(cartaJugada == '' or cartaJugada > len(mano_jugador1)-1 or cartaJugada <= -1):
             cartaJugada = int(input('ingresa cual es la posicion de la carta que queres jugar (tenes '+str(len(mano_jugador1))+' cartas): ')) - 1
