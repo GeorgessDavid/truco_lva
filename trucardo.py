@@ -157,11 +157,11 @@ def calcular_tanto(cartas):
 
         # Caso 3 Ningún par de cartas del mismo palo
         else:
-            if num[0] < 10 and num[0] >= num[1] and num[0] >= num[2]:
+            if num[0] < 10 and num[0] > num[1] and num[0] > num[2]:
                 tanto = num[0]
-            elif num[1] < 10 and num[1] >= num[0] and num[1] >= num[2]:
+            elif num[1] < 10 and num[1] > num[0] and num[1] > num[2]:
                 tanto = num[1]
-            elif num[2] < 10 and num[2] >= num[0] and num[2] >= num[1]:
+            elif num[2] < 10 and num[2] > num[0] and num[2] > num[1]:
                 tanto = num[2]
             
         return tanto
@@ -259,6 +259,7 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
     rondasGanadasJugador2 = 0
     cantoMaquina = False
     cantoJugador = False
+    envidoNoQuerido = False
     
     
     while(turno < 4 and rondasGanadasJugador1 < 2 and rondasGanadasJugador2 < 2):
@@ -266,9 +267,10 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
             mazo = crear_mazo()
         confirmacion = ''
         cartaJugada = int(99) #Le pongo 99 porque para cumplir la condicion tiene que ser 0, 1 o 2
-        print("Mano",turno)
-        print("Jugador 1 tiene:",mano_jugador1)
-        print("Comienza jugando:", ganadorUltimaRonda)
+        print('\n================================')
+        print("\nMano",turno)
+        print("\nJugador 1 tiene:",mano_jugador1)
+        print("\nComienza jugando:", ganadorUltimaRonda)
         if(ganadorUltimaRonda == 'Jugador 2'):
             if(cantoMaquina == False):
                 cantaMaq = maquinaDecideSiCantar(turno, juego, False)
@@ -283,22 +285,57 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
         if(cantoMaquina == False):
             if(juego == '' or juego == 'no' and turno == 1):
                 juego = ''
-                while(juego != 'truco' and juego != 'envido' and juego != 'real envido' and juego != 'falta envido' and juego != 'no'):
-                    juego = input('Cantas truco, envido, real envido o falta envido? (escribí "truco", "envido", "real envido", "falta envido" o "no"): ')
+                while(juego != 'truco' and juego != 'no'):
+                    if(juego != 'envido' and juego != 'real envido' and juego != 'falta envido' and turno == 1 and envidoNoQuerido == False):
+                        juego = input('Cantas truco, envido, real envido o falta envido? (escribí "truco", "envido", "real envido", "falta envido" o "no"): ')
+                    else:
+                        juego = input('Cantas truco? (Escribí "truco" o "no"):')
                     if(juego != 'truco' and juego != 'envido' and juego != 'real envido' and juego != 'falta envido' and juego != 'no'):
                         print('Lo que ingresaste no es valido, intenta de nuevo')
                     elif(juego == 'truco' or juego == 'envido' or juego == 'real envido' or juego == 'falta envido'):
                         confirmacion = maquinaDecideSiCantar(turno, juego, True)
                         if(confirmacion == 'no'):
                             print('Jugador 2 no quiso')
-                            resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
-                            puntosjugador1 = resultado[0]
-                            puntosjugador2 = resultado[1]
-                            return [puntosjugador1, puntosjugador2]
+                            if(juego != 'envido' and juego != 'real envido' and juego != 'falta envido'):
+                                resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
+                                puntosjugador1 = resultado[0]
+                                puntosjugador2 = resultado[1]
+                                return [puntosjugador1, puntosjugador2]                               
+                            else: 
+                                envidoNoQuerido = True
+                                resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
+                                puntosjugador1 = resultado[0]
+                                puntosjugador2 = resultado[1]
+                        elif (juego == 'envido' or juego == 'real envido' or juego == 'falta envido'):
+                            print(juego, 'querido')
+                            tantoJugador1 = calcular_tanto(mano_jugador1)
+                            tantoJugador2 = calcular_tanto(mano_jugador2)
+                            if tantoJugador1 > tantoJugador2:
+                                resultado = calcular_puntos(juego, True, puntosjugador1, puntosjugador2, 'Jugador 1')
+                                print('Ganaste el envido: tenías '+str(tantoJugador1)+' y el Jugador 2 tenía '+str(tantoJugador2))
+                                print('\nPuntos totales después del envido: \nJugador 1: ', resultado[0], '\nJugador 2: ', resultado[1])
+                                puntosjugador1 = resultado[0]
+                                puntosjugador2 = resultado[1]
+                                if(juego == 'falta envido'):
+                                    print('\nPartido finalizado, lo ganó el Jugador 1.')
+                                    return [puntosjugador1, puntosjugador2]
+                            elif tantoJugador2 > tantoJugador1:
+                                resultado = calcular_puntos(juego, True, puntosjugador1, puntosjugador2, 'Jugador 2')
+                                puntosjugador1 = resultado[0]
+                                puntosjugador2 = resultado[1]
+                                print('Perdiste el envido: el Jugador 2 tenía '+str(tantoJugador2)+' y tenías '+str(tantoJugador1))
+                                if(juego == 'falta envido'):
+                                    print('\nPartido finalizado, lo ganó el Jugador 2.')
+                                    return [puntosjugador1, puntosjugador2]
+                            else:
+                                print('\nJugador 1: ', tantoJugador1)
+                                print('\nJugador 2: ', tantoJugador2)
+                                print('No hay puntos para nadie, es demasiada lógica calcular quién gana por mano.')
                         else:
-                            print('Jugador 2 quiso')
+                            print('\nJugador 2 quiso.')
                             cantoJugador = True
                             cantoMaquina = False
+
             elif(juego == '' or juego == 'no' and turno > 1):
                 juego = ''
                 while(juego != 'truco' and juego != 'no'):
@@ -423,6 +460,7 @@ while(puntosjugador1 < puntosJuego and puntosjugador2 < puntosJuego):
     resultado = jugar_truco(puntosjugador1, puntosjugador2, mazo)
     puntosjugador1 = resultado[0]
     puntosjugador2 = resultado[1]
+    print('\n================================\n')
     print('Puntos de Jugador 1:', puntosjugador1)
     print('Puntos de Jugador 2:', puntosjugador2)
 
@@ -435,4 +473,13 @@ if(puntosjugador1 >= puntosJuego and puntosjugador2 >= puntosJuego):
 elif(puntosjugador1 >= puntosJuego):
     print('Ganador: Jugador 1')
 else:
-    print('Ganador: Jugador 2') 
+    print('Ganador: Jugador 2')
+print('\nCopyright (r) LVA - La Vagancia Avanza - 2024. Todos los derechos reservados.\nTrucardoLVA')
+print('\nCréditos: \nProduct Owner: Georges David  \nProject Manager: Iván Díaz \nContent Creator: Felipe Iván Figueredo Alarcón\nCommunity Manager: Luca Ravello Benito\nGod: Lionel Andrés Messi Cuccitinni\n---------------------\nTech Adviser: Franco Martorella - Grupo 3\nLawyer - Just In Case: Luciano Conde - Grupo 3\n')
+aprobamos = input('\nPor sí o por no, aprobamos?:\n')
+
+while(aprobamos != 'si' or aprobamos != 'Sí' or aprobamos != "sí" or aprobamos != "Si"):
+    aprobamos = input('\nDaaaaale, nos aprobás?:\n')
+
+print('\nGracias! Nos vemos en progra I ;)\n')
+print('\nprint(break)\n')
