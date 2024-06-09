@@ -52,13 +52,8 @@ def repartir_cartas():
     mano_jugador2.append(mazo[3])
     mano_jugador2.append(mazo[4])
     mano_jugador2.append(mazo[5])
-    mazo.remove(mazo[0])
-    mazo.remove(mazo[1])
-    mazo.remove(mazo[2])
-    mazo.remove(mazo[3])
-    mazo.remove(mazo[4])
-    mazo.remove(mazo[5])
-
+    for i in range(6): #Rango 6 porque el juego está programado para que se juegue entre dos usuarios, por lo que las cartas repartidas siempre son 6.
+        mazo.remove(mazo[i])
     return [mano_jugador1, mano_jugador2]
 
 
@@ -240,14 +235,31 @@ def jugar_truco():
         print("Comienza jugando:", ganadorUltimaRonda)
         if(ganadorUltimaRonda == 'Jugador 2'):
             print("Jugador 2 juega:",mano_jugador2[0])
-        print(juego, juego == 'no')
+        print(juego)
         #Pregunta si quiere cantar truco o envido, en el principio de cada manos
         if(juego == '' or juego == 'no'):
             juego = ''
-            while(juego != 'truco' and juego != 'envido' and juego != 'no'):
-                juego = input('Cantas truco o envido? (escribí "truco", "envido" o "no"): ')
+            while(juego != 'truco' and juego != 'no'):
+                if turno == 1 and juego != 'envido':
+                    juego = input('Cantas truco o envido? (escribí "truco", "envido" o "no"): ')
+                else:
+                    juego = input('Cantas truco ? (escribí "truco" o "no"): ')    
                 if(juego != 'truco' and juego != 'envido' and juego != 'no'):
                     print('Lo que ingresaste no es valido, intenta de nuevo')
+                if(juego == 'envido'):
+                    print('Se quiso el envido.')
+                    tantoJugador1 = calcular_tanto(mano_jugador1)
+                    tantoJugador2 = calcular_tanto(mano_jugador2)
+                    
+                    if tantoJugador1 > tantoJugador2:
+                        puntos = calcular_puntos(juego, True)
+                        print('Ganaste el envido: tenías '+str(tantoJugador1)+' y el Jugador 2 tenía '+str(tantoJugador2))
+                    elif tantoJugador2 > tantoJugador1:
+                        print('Perdiste el envido: el Jugador 2 tenía '+str(tantoJugador2)+' y tenías '+str(tantoJugador1))
+                    else:
+                        print('No hay puntos para nadie, es demasiada lógica calcular quién gana por mano.')
+
+                    juego = 'envido'
         elif(juego == 'truco'):
             confirmacion = ''
             while(confirmacion != 'si' and confirmacion != 'no'):
@@ -267,8 +279,7 @@ def jugar_truco():
                     print('Lo que ingresaste no es valido, intenta de nuevo')
                 elif(confirmacion == 'no'):
                     puntos = calcular_puntos(juego, False)
-                    return False
-        
+                    return False            
         # Pide al jugador que ingrese el numero de la posicion de la carta
         while(cartaJugada == '' or cartaJugada > len(mano_jugador1)-1 or cartaJugada <= -1):
             cartaJugada = int(input('ingresa cual es la posicion de la carta que queres jugar (tenes '+str(len(mano_jugador1))+' cartas): ')) - 1
