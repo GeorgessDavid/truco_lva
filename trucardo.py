@@ -476,9 +476,9 @@ else:
     print('Ganador: Jugador 2')
 print('\nCopyright (r) LVA - La Vagancia Avanza - 2024. Todos los derechos reservados.\nTrucardoLVA')
 print('\nCréditos: \nProduct Owner: Georges David  \nProject Manager: Iván Díaz \nContent Creator: Felipe Iván Figueredo Alarcón\nCommunity Manager: Luca Ravello Benito\nGod: Lionel Andrés Messi Cuccitinni\n---------------------\nTech Adviser: Franco Martorella - Grupo 3\nLawyer - Just In Case: Luciano Conde - Grupo 3\n')
-aprobamos = input('\nPor sí o por no, aprobamos?:\n')
+aprobamos = input('\nPor si o por no, aprobamos?:\n')
 
-while(aprobamos != 'si' or aprobamos != 'Sí' or aprobamos != "sí" or aprobamos != "Si"):
+while(aprobamos != 'si' and aprobamos != 'Si' and aprobamos != "SI" and aprobamos != "sI"):
     aprobamos = input('\nDaaaaale, nos aprobás?:\n')
 
 print('\nGracias! Nos vemos en progra I ;)\n')
