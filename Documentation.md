@@ -27,3 +27,14 @@ Esta función recibe cinco parámetros:
 -   Como tercer parámetro debe recibir un número entero que se utilizará para sumar los puntos del jugador 1.
 -   Como cuarto parámetro debe recibir otro número entero que se uitlizará para sumar los puntos del jugador 2.
 -   Como quinto parámetro debe recibir un string, que indicaría a qué jugador se le suman los puntos.
+
+Esta función calcula los puntos obtenidos a través de las condiciones del parámetro y devuelve un arreglo con los puntos del jugador 1 y el jugador 2.
+
+#### maquinaDecideSiCantar: 
+Esta función recibe tres parámetros, en el cual el primer parámetro debe recibir un número entero, que corresponde al turno del jugador, el segundo parámetro debe recibir una cadena de texto, que corresponde a la instancia del juego actual, y como tercer y último parámetro, debe recibir un booleano, el que corresponde a sí la máquina debe decidir si cantar o si tiene que contestar. La función está ideada para que la misma evalúe las condiciones de su mano y así determinar qué hacer. La misma devuelve el juego actual, que es modificado durante la ejecución de la misma.
+
+#### crear_mazo: 
+Esta función no recibe parámetros, internamente tiene declaradas dos listas, uno con los palos de las cartas y otro con los números. Durante su ejecución combina los números con cada uno de los palos y devuelve un arreglo con todas las cartas armadas.
+
+#### jugar_truco:
+Función principal del juego. Esta función recibe tres parámetros, el primero y el segundo deben ser números enteros que corresponden a los puntos del jugador 1 y 2 respectivamente, como tercer parámetro debe recibir un arreglo, que corresponde al mazo de cartas.
