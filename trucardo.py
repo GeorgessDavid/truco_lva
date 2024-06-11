@@ -91,66 +91,80 @@ def calcular_tanto(cartas):
             naipe = separar_tanto(cartas[i])
             num.append(naipe[0])
             palo.append(naipe[1])
-
+            
         tanto = 0
 
         # Caso particular de que las 3 cartas sean del mismo palo ya que no se utiliza la flor.
         if palo[0] == palo[1] == palo[2]:
-            masAlta1 = num[0]
-            masAlta2 = num[1]
-            if num[1] > masAlta1:
+            masAlta1 = 0
+            masAlta2 = 0
+            if num[0] < 10: 
+                masAlta1 = num[0]
+
+            if num[1] > masAlta1 and num[1] < 10:
+                masAlta2 = masAlta1
                 masAlta1 = num[1]
-                masAlta2 = num[0]
-            if num[2] > masAlta1:
+            if num[2] > masAlta1 and num[2] < 10:
                 masAlta2 = masAlta1
                 masAlta1 = num[2]
-            elif num[2] > masAlta2:
+            elif num[2] > masAlta2 and num[2] < 10:
                 masAlta2 = num[2]
-                tanto = masAlta1 + masAlta2
-                return tanto
+            tanto = 20 + masAlta1 + masAlta2
+            return tanto
         
         # Caso 1: Dos cartas del mismo palo y sin figuras
         if palo[0] == palo[1] and num[0] < 10 and num[1] < 10:
             tanto = 20 + num[0] + num[1]
+            return tanto
         elif palo[0] == palo[2] and num[0] < 10 and num[2] < 10:
             tanto = 20 + num[0] + num[2]
+            return tanto
         elif palo[1] == palo[2] and num[1] < 10 and num[2] < 10:
             tanto = 20 + num[1] + num[2]
+            return tanto
 
         # Caso 2 Dos cartas del mismo palo y con almenos una figura
     
         elif palo[0] == palo[1]:
-            if num[0] > 10 and num[1] > 10:
+            if num[0] >= 10 and num[1] >= 10:
                 tanto = 20
-            elif num[0] > 10:
+            elif num[0] >= 10:
                 tanto = 20 + num[1]
-            elif num[1] > 10:
+            elif num[1] >= 10:
                 tanto = 20 + num[0]
+            return tanto
         elif palo[0] == palo[2]:
-            if num[0] > 10 and num[2] > 10:
+            if num[0] >= 10 and num[2] >= 10:
                 tanto = 20
-            elif num[0] > 10:
+            elif num[0] >= 10:
                 tanto = 20 + num[2]
-            elif num[2] > 10:
+            elif num[2] >= 10:
                 tanto = 20 + num[0]
+            return tanto
         elif palo[1] == palo[2]:
-            if num[1] > 10 and num[2] > 10:
+            if num[1] >= 10 and num[2] >= 10:
                 tanto = 20
-            elif num[1] > 10:
+            elif num[1] >= 10:
                 tanto = 20 + num[2]
-            elif num[2] > 10:
+            elif num[2] >= 10:
                 tanto = 20 + num[1]
+            return tanto
 
         # Caso 3 Ningún par de cartas del mismo palo
         else:
-            if num[0] < 10 and num[0] > num[1] and num[0] > num[2]:
-                tanto = num[0]
-            elif num[1] < 10 and num[1] > num[0] and num[1] > num[2]:
-                tanto = num[1]
-            elif num[2] < 10 and num[2] > num[0] and num[2] > num[1]:
-                tanto = num[2]
+            cartaMasAlta = 0
+            if (num[0] < 10):
+                cartaMasAlta = num[0]
             
-        return tanto
+            if (num[1] < 10) and (num[1] >= cartaMasAlta):
+                cartaMasAlta = num[1]
+                            
+            if (num[2] < 10) and (num[2] >= cartaMasAlta):
+                cartaMasAlta = num[2]
+            
+            tanto = cartaMasAlta
+            return tanto
+            
     else:
         print('Error, se esperaba un arreglo de dos o más cartas')
 
@@ -280,7 +294,7 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                         #Este if es la posibilidad de no haber cantado ni truco ni envido anteriormente y es el 1er turno
                         juego = input('Cantas truco, envido, real envido o falta envido? (escribí "truco", "envido", "real envido", "falta envido" o "no"): ')
                     else:
-                        #Aca llega si se canto envido anteriormente y no se quiso, o es el turno 2 y no se canto anteriormente truco
+                        #Aca llega si se canto envido anteriormente y no se quiso.
                         juego = input('Cantas truco? (Escribí "truco" o "no"):')
                     if(juego != 'truco' and juego != 'envido' and juego != 'real envido' and juego != 'falta envido' and juego != 'no'):
                         #validacion para que se ingrese lo indicado
@@ -304,6 +318,8 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                         elif (juego == 'envido' or juego == 'real envido' or juego == 'falta envido'):
                         #Si entra aca, significa que el Jugador 2 si quiso y el juego cantado fue envido
                             print(juego, 'querido')
+                            
+                            # Se calculan los tantos indendientemente del envido, real o falta envido.
                             tantoJugador1 = calcular_tanto(mano_jugador1)
                             tantoJugador2 = calcular_tanto(mano_jugador2)
                             if tantoJugador1 > tantoJugador2:
