@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="georg"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-06-11 06:07:38 p.&#160;m."/>
+        <attribute name="created" value="Z2Vvcmc7TEFQVE9QLVVVREtCVVNMOzIwMjQtMDYtMTE7MDU6MzQ6MjMgcC7CoG0uOzMyNTc="/>
+        <attribute name="edited" value="Z2Vvcmc7TEFQVE9QLVVVREtCVVNMOzIwMjQtMDYtMTE7MDY6MDc6MzggcC7CoG0uOzE7MzM3Mg=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="puntosJuego" type="Integer" array="False" size=""/>
+            <assign variable="puntosJuego" expression="0"/>
+            <while expression="puntosJuego != 30 and&#13;&#10;puntosJuego != 15 and&#13;&#10;puntosJuego != 50">
+                <input variable="puntosJuego"/>
+                <assign variable="puntosJuego" expression="entrada"/>
+                <if expression="puntosJuego != 30 and&#13;&#10;puntosJuego != 15 and&#13;&#10;puntosJuego != 50">
+                    <then>
+                        <output expression="Error" newline="True"/>
+                    </then>
+                    <else>
+                        <assign variable="puntosJuego" expression="int(puntosJuego)"/>
+                    </else>
+                </if>
+            </while>
+            <declare name="puntosJugador1" type="Integer" array="False" size=""/>
+            <assign variable="puntosJugador1" expression="0"/>
+            <declare name="puntosJugador2" type="Integer" array="False" size=""/>
+            <assign variable="puntosJugador2" expression="0"/>
+            <call expression="crearMazo()"/>
+            <while expression="puntosJugador1 &lt; puntosJuego and puntosJugador2 &lt; puntosJuego">
+                <declare name="resultado" type="Integer" array="False" size=""/>
+                <call expression="jugarTruco()"/>
+                <assign variable="resultado" expression="jugarTruco()"/>
+                <assign variable="puntosJugador1" expression="resultado1"/>
+                <assign variable="puntosJugador2" expression="resultado2"/>
+                <output expression="puntos" newline="True"/>
+            </while>
+            <if expression="puntosJugador1 &gt;= puntosJuego">
+                <then>
+                    <output expression="Ganador1" newline="True"/>
+                </then>
+                <else>
+                    <output expression="Ganador2" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
