@@ -280,11 +280,11 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                 cantaMaq = maquinaDecideSiCantar(turno, juego, False)
                 if(cantaMaq != 'no'):
                     juego = cantaMaq
-                    print('Jugador 2 canta:', cantaMaq)
+                    print('\nJugador 2 canta:', cantaMaq)
                     cantoMaquina = True
                     cantoJugador = False
                 else:
-                    print("Jugador 2 juega:",mano_jugador2[0])
+                    print("\nJugador 2 juega:",mano_jugador2[0])
         #Pregunta si quiere cantar truco o envido, en el principio de cada manos
         if(cantoMaquina == False): # Si cantoMaquina = False, entonces nadie canto, o canto Jugador 1
             if(juego == '' or juego == 'no' and turno == 1):
@@ -304,7 +304,7 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                         confirmacion = maquinaDecideSiCantar(turno, juego, True)
                         if(confirmacion == 'no'):
                         #Si entra aca es que el Jugador 2 no quiso el juego cantado
-                            print('Jugador 2 no quiso')
+                            print('\nJugador 2 no quiso')
                             if(juego != 'envido' and juego != 'real envido' and juego != 'falta envido'):
                                 resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
                                 puntosjugador1 = resultado[0]
@@ -317,7 +317,7 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                                 puntosjugador2 = resultado[1]
                         elif (juego == 'envido' or juego == 'real envido' or juego == 'falta envido'):
                         #Si entra aca, significa que el Jugador 2 si quiso y el juego cantado fue envido
-                            print(juego, 'querido')
+                            print('\n',juego, 'querido \n')
                             
                             # Se calculan los tantos indendientemente del envido, real o falta envido.
                             tantoJugador1 = calcular_tanto(mano_jugador1)
@@ -355,39 +355,39 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
             elif(juego == '' or juego == 'no' and turno > 1): #este if es a partir del 2do turno y si no se canto truco
                 juego = ''
                 while(juego != 'truco' and juego != 'no'):
-                    juego = input('Cantas truco? (escribí "truco" o "no"): ') #se agarra el input
+                    juego = input('\nCantas truco? (escribí "truco" o "no"): ') #se agarra el input
                     if(juego != 'truco' and juego != 'no'): # validacion para entradas no validas
-                        print('Lo que ingresaste no es valido, intenta de nuevo')
+                        print('\nLo que ingresaste no es valido, intenta de nuevo')
                     elif(juego == 'truco'): #si lo ingresado en el input es truco, Jugador 2 decide si aceptar o no
                         confirmacion = maquinaDecideSiCantar(turno, juego, True)
                         if(confirmacion == 'no'):
-                            print('Jugador 2 no quiso')
+                            print('\nJugador 2 no quiso')
                             resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
                             puntosjugador1 = resultado[0]
                             puntosjugador2 = resultado[1]
                             return [puntosjugador1, puntosjugador2]
                         else:
-                            print('Jugador 2 quiso')
+                            print('\nJugador 2 quiso')
                             cantoJugador = True
                             cantoMaquina = False
             elif(juego == 'truco' and cantoJugador == False):
                 #si esta cantado truco por jugador 2, ya que cantoJugador esta en false, se pregunta si se quiere cantar retruco
                 confirmacion = ''
                 while(confirmacion != 'si' and confirmacion != 'no'):
-                    confirmacion = input('Queres cantar retruco? (por "si" o por "no"): ')
+                    confirmacion = input('\nQueres cantar retruco? (por "si" o por "no"): ')
                     if(confirmacion != 'si' and confirmacion != 'no'):
-                        print('Lo que ingresaste no es valido, intenta de nuevo')
+                        print('\nLo que ingresaste no es valido, intenta de nuevo')
                     elif(confirmacion == 'si'): #si se quiere retruco, se pregunta a jugador 2
                         juego = 'retruco'
                         confirmacion = maquinaDecideSiCantar(turno, juego, True)
                         if(confirmacion == 'no'):
-                            print('Jugador 2 no quiso')
+                            print('\nJugador 2 no quiso')
                             resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
                             puntosjugador1 = resultado[0]
                             puntosjugador2 = resultado[1]
                             return [puntosjugador1, puntosjugador2]
                         else:
-                            print('Jugador 2 quiso')
+                            print('\nJugador 2 quiso')
                             cantoJugador = True
                             cantoMaquina = False
             elif(juego == 'retruco' and cantoJugador == False):
@@ -401,13 +401,13 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
                         juego = 'vale cuatro'
                         confirmacion = maquinaDecideSiCantar(turno, juego, True)
                         if(confirmacion == 'no'):
-                            print('Jugador 2 no quiso')
+                            print('\nJugador 2 no quiso')
                             resultado = calcular_puntos(juego, False, puntosjugador1, puntosjugador2, 'Jugador 1')
                             puntosjugador1 = resultado[0]
                             puntosjugador2 = resultado[1]
                             return [puntosjugador1, puntosjugador2]
                         else:
-                            print('Jugador 2 quiso')
+                            print('\nJugador 2 quiso')
                             cantoJugador = True
                             cantoMaquina = False
         else:
@@ -467,10 +467,18 @@ def jugar_truco(puntosjugador1, puntosjugador2, mazo):
 
 # Ejecutar el juego
 puntosJuego = 0
+print('\n================================')
+print('\nBienvenido al TrucardoLVA\n')
+print('================================\n')
+print('Antes de comenzar')
 while(puntosJuego != 30 and puntosJuego != 15 and puntosJuego != 50):
-    puntosJuego = int(input('\nIndica a cuantos puntos va a ser el truco ("15", "30" o "50"): '))
-    if(puntosJuego != 30 and puntosJuego != 15 and puntosJuego != 50):
-        print('No es valido lo que ingresaste, intenta de nuevo')
+
+    puntosJuego = input('Indica a cuantos puntos va a ser el truco ("15", "30" o "50"): ')
+    
+    if(puntosJuego != "30" and puntosJuego != "15" and puntosJuego != "50"): 
+        print('\nNo es valido lo que ingresaste, intenta de nuevo\n')
+    else:
+        puntosJuego = int(puntosJuego)
 
 puntosjugador1 = 0
 puntosjugador2 = 0
