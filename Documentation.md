@@ -1,9 +1,9 @@
-## Trucardo
+# Trucardo
 
-# Variables Constantes
+## Variables Constantes
 Jerarquía: Constante en la que definimos qué carta es más alta. Utilizamos listas de listas porque no podemos utilizar objetos. Fue la mejor manera que encontramos aplicar esta lógica. 
 
-# Funciones
+## Funciones
 obtener_jerarquia: Esta función espera una carta (string) y busca la carta en la lista de JERARQUIA.
 
 repartir_cartas: Esta funcion recibe como parámetro un arreglo (o lista) en el cual contenga todas las cartas en juego. Luego mezcla los elementos del arreglo y devuelve dos arreglos nuevos correspondientes a la mano del jugador y a la mano de la máquina.
