@@ -1,8 +1,25 @@
 # Trucardo
 
-## Variables Constantes
-### Jerarquía:
+## Variables 
+### Constantes
+#### Jerarquía:
 Constante en la que definimos qué carta es más alta. Utilizamos listas de listas porque no podemos utilizar objetos. Fue la mejor manera que encontramos aplicar esta lógica. 
+
+### Enteras
+#### puntosJuego
+Es una variable entera que se inicializa en 0 para después ser modificada para asignar los puntos a jugar.
+
+#### puntosJugador1
+Es una variable entera acumuladora que cuenta los puntos del jugador 1.
+
+#### puntosJugador2
+Al igual que la variable puntosJugador1, pero cuenta los puntos del jugador 2.
+
+
+### Lista
+#### resultado
+Variable que recibe el arreglo que devuelve la función jugar_truco()
+
 
 ## Funciones
 #### obtener_jerarquia:
@@ -37,4 +54,4 @@ Esta función recibe tres parámetros, en el cual el primer parámetro debe reci
 Esta función no recibe parámetros, internamente tiene declaradas dos listas, uno con los palos de las cartas y otro con los números. Durante su ejecución combina los números con cada uno de los palos y devuelve un arreglo con todas las cartas armadas.
 
 #### jugar_truco:
-Función principal del juego. Esta función recibe tres parámetros, el primero y el segundo deben ser números enteros que corresponden a los puntos del jugador 1 y 2 respectivamente, como tercer parámetro debe recibir un arreglo, que corresponde al mazo de cartas.
+Función principal del juego. Esta función recibe tres parámetros, el primero y el segundo deben ser números enteros que corresponden a los puntos del jugador 1 y 2 respectivamente, como tercer parámetro debe recibir un arreglo, que corresponde al mazo de cartas. Esta función devuelve una lista con los puntos del jugador 1 y jugador 2 respectivamente.
